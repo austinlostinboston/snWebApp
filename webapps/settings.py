@@ -74,8 +74,8 @@ LOGIN_REDIRECT_URL = "/frontPage"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB-NAME')
-        'USER': os.environ.get('DB-USER')
+        'NAME': os.environ.get('DB-NAME'),
+        'USER': os.environ.get('DB-USER'),
         'PASSWORD': os.environ.get('DB-PASSWORD'),
         'HOST': os.environ.get('DB-HOST'),
         'PORT': os.environ.get('DB-PORT')
