@@ -71,16 +71,39 @@ LOGIN_REDIRECT_URL = "/frontPage"
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DB-NAME'),
-        'USER': os.environ.get('DB-USER'),
-        'PASSWORD': os.environ.get('DB-PASSWORD'),
-        'HOST': os.environ.get('DB-HOST'),
-        'PORT': os.environ.get('DB-PORT')
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('DB-NAME'),
+#         'USER': os.environ.get('DB-USER'),
+#         'PASSWORD': os.environ.get('DB-PASSWORD'),
+#         'HOST': os.environ.get('DB-HOST'),
+#         'PORT': os.environ.get('DB-PORT')
+#     }
+# }
+
+## Handles the backend on heroku
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Static asset configuration
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -95,14 +118,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_URL = '/static/'
-
-
-## Handle emailing from webapp
 
 # Prints email out to terminal
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
