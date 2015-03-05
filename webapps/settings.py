@@ -74,10 +74,11 @@ LOGIN_REDIRECT_URL = "/frontPage"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config.get('PGSQL', 'Name'),
-        'USER': config.get('PGSQL', 'User'),
-        'PASSWORD': '',
-        'HOST':''
+        'NAME': os.environ.get('DB-NAME')
+        'USER': os.environ.get('DB-USER')
+        'PASSWORD': os.environ.get('DB-PASSWORD'),
+        'HOST': os.environ.get('DB-HOST'),
+        'PORT': os.environ.get('DB-PORT')
     }
 }
 
@@ -108,8 +109,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 ## Enables REAL emails to be sent from email specific in config.ini
-# config = ConfigParser.ConfigParser()
-# config.read("config.ini")
 # EMAIL_HOST = config.get('Email', 'Host')
 # EMAIL_PORT = config.get('Email', 'Port')
 # EMAIL_HOST_USER = config.get('Email', 'User')
