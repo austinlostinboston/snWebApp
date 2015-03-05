@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+local_settings.py
+*.DS_Store
+config.ini
+
+# Editor backup files
+*~
+*#
