@@ -1,0 +1,52 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.login-form {
+    max-width: 250px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+input {
+    width: 250px;
+}
+
+form.squeak {
+    max-width: 600px;
+    margin: 0cm auto;
+    margin-bottom: 200px;
+}
+
+form.logout input {
+  max-width: 50px;
+}
+
+input.login-form{
+    width: 250px;
+}
+
+.only-text {
+    text-align: center;
+}
+
+.input-group {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tbl-profile {
+  align: center;
+  table-layout: fixed;
+}
+
+th, td {
+  word-wrap:break-word;
+  max-width: 500px;
+  vertical-align: top;
+  padding-right: 25px;
+  padding-left: 25px;
+}

@@ -1,0 +1,29 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block welcome %}
+  <h1>Welcome to Squeak!</h1>
+  <h3>login</h3>
+{% endblock %}
+
+{% block user-info %}
+  <form action="{% url 'register' %}" method="get">
+    <input type="submit" value="Register as a new user" class="btn btn-default btn-md">
+  </form>
+{% endblock %}
+
+{% block content %}
+  {% if form.errors %}
+    <p class="only-text" style="color:red">
+      Incorrect user name and password.
+    </p>
+  {% endif %}
+
+  <form method="post" action="{% url 'django.contrib.auth.views.login' %}" class="login-form">
+    <input type="text" name="username" placeholder="username" value="{{ username }}">
+    <input type="password" name="password" placeholder="password" value="{{ password}}">
+    <input type="submit" value="Login" class="btn btn-default btn-md" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    {% csrf_token %}
+  </form>
+{% endblock %}
+

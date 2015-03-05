@@ -1,0 +1,16 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block welcome %}
+  <h1>Register for Squeak:</h1>
+{% endblock %}
+
+
+{% block register %}
+  <form method="post" action="{% url 'register' %}">
+    <table class="register">
+      {{form}}
+    </table>
+    {% csrf_token %}
+    <input type="submit" value="Register" class="btn btn-default btn-md"/>
+  </form>
+{% endblock %}

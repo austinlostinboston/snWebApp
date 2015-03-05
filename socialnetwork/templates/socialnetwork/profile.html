@@ -1,0 +1,161 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block welcome %}
+  <h1>Welcome to {{ user }}'s profile page.</h1>
+  <a href="/logout">Logout</a>
+{% endblock %}
+
+{% block errors %}
+  {% for error in errors %}
+    <p class="only-text" style="color: red">
+      {{ error }}
+    </p>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block user-info %}
+  <hr>
+  <hr>
+  <h2>{{user}}'s Information</h2>
+  <a href="/">Back to the Squeaks Page</a>
+  <div>
+    {% if picture %}
+      <img src="{{ picture }}" width="200px">
+    {% endif %}
+  </div>
+  {% ifequal logged_in_user user %}
+  <a href="{% url 'edit_profile' %}">Edit Profile</a>
+  {% endifequal %}
+
+  <form class="profile" action="{% url 'follow' account=user %}" method="post">
+    {% if current_follow %}
+      <button type="disabled" class="btn btn-success disabled">
+        <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Following
+      </button>
+    {% else %}
+      <button type="submit" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Follow
+      </button>
+    {% endif %}
+    {% csrf_token %}
+  </form>
+
+  <h3>First Name: {{ firstname }}</h3>
+  <h3>Last Name: {{ lastname }}</h3>
+  <h3>Age: {{ age }}</h3>
+  <h3>Bio: </h3> <p> {{ bio }}</p>
+  <h3>Username: {{ user }}</h3>
+  <h3>Total Squeaks: {{ squeaks|length }}</h3>
+{% endblock %}
+
+
+
+{% block post %}
+  <h2 class="text-only">{{ user }} Follows</h2>
+  {% for follower in following %}
+    <h4 class="text-only"> 
+      {% if follower.following.picture %}
+        <img src="{{ follower.following.picture }}" width="50px" height="50px">
+      {% endif %}
+        <a href="/account/{{ follower.following.username }}">{{ follower.following.username }}</a>
+  {% endfor %}
+{% endblock %}
+
+
+
+{% block content %}
+  <div class="profile">
+    <h2 class="text-only">{{ user }}'s Followers' squeaks!</h2>
+    
+    {% for item in following_squeaks %}
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="text-only">
+        {% if item.user.picture %}
+          <img src="{{ item.user.picture }}" width="50px" height="50px">
+        {% endif %}
+        <a href="account/{{ item.user.username }}"> {{item.user.username}}</a> squeaked {{ item.content}} at {{ item.dateTime }}
+        </h4>
+      </div>
+
+      <div class="panel-body">
+        <div name="comment-object{{item.id}}">
+          {% for comment in comments %}
+            {% ifequal item.id comment.postID %}
+              <h5 name="comment{{item.id}}" class="comment">
+              {% if comment.user.picture %}
+                <img src="{{ comment.user.picture }}" width="30px" height="30px">
+              {% endif %}
+              <a href="account/{{ comment.user.username }}"> {{comment.user.username}}</a> commented {{ comment.comment}} at {{ comment.dateTime }}
+              </h5>
+            {% endifequal %}
+          {% endfor %}
+        </div>
+
+        <div id="{{item.id}}" class="commentDiv">
+          <input type="hidden" id="{{item.id}}logged_in_user" value="{{ logged_in_user }}">
+          <input type="hidden" id="{{item.id}}post_id" value="{{item.id}}">
+          <div class="input-group">
+            <input class="form-control" type="text" id="{{item.id}}comment" placeholder="comment" maxlength="160" value="{{ comment }}">
+            {% csrf_token %}
+            <span class="input-group-btn">
+              <button name="comment-button" type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <hr>
+    <hr>
+
+    <h2 class="text-only">{{ user }}'s lifetime squeaks!</h2>
+    
+    {% for item in squeaks %}
+      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="text-only">
+        {% if item.user.picture %}
+          <img src="{{ item.user.picture }}" width="50px" height="50px">
+        {% endif %}
+        <a href="account/{{ item.user.username }}"> {{item.user.username}}</a> squeaked {{ item.content}} at {{ item.dateTime }}
+        </h4>
+      </div>
+
+      <div class="panel-body">
+        <div name="comment-object{{item.id}}">
+          {% for comment in comments %}
+            {% ifequal item.id comment.postID %}
+              <h5 name="comment{{item.id}}" class="comment">
+              {% if comment.user.picture %}
+                <img src="{{ comment.user.picture }}" width="30px" height="30px">
+              {% endif %}
+              <a href="account/{{ comment.user.username }}"> {{comment.user.username}}</a> commented {{ comment.comment}} at {{ comment.dateTime }}
+              </h5>
+            {% endifequal %}
+          {% endfor %}
+        </div>
+
+        <div id="{{item.id}}" class="commentDiv">
+          <input type="hidden" id="{{item.id}}logged_in_user" value="{{ logged_in_user }}">
+          <input type="hidden" id="{{item.id}}post_id" value="{{item.id}}">
+          <div class="input-group">
+            <input class="form-control" type="text" id="{{item.id}}comment" placeholder="comment" maxlength="160" value="{{ comment }}">
+            {% csrf_token %}
+            <span class="input-group-btn">
+              <button name="comment-button" type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

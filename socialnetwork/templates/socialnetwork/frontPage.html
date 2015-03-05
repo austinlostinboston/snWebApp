@@ -1,0 +1,82 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block welcome %}
+  <h1>Squeak Frontpage</h1>
+{% endblock %}
+
+{% block post %}
+  <h3>Welcome {{user.first_name}} {{user.last_name}}</h3>
+  <h4><a href="account/{{ user.username }}">go to your Profile Page</a></h4>
+  <form action="{% url 'logout' %}" method="get" class="logout">
+    <input type="submit" value="Logout" class="btn btn-default btn-xs">
+  </form>
+{% endblock %}
+
+{% block content %}
+  <form class="squeak" method="post" action="squeak">
+    <h3 align="right">Post a Squeak!</h3>
+    <div class="input-group">
+      <input id="post" class="form-control" type="text" name="squeak" placeholder="squeak" maxlength="160" value="{{ squeak }}">
+      <span class="input-group-btn">
+      <button type="submit" class="btn btn-default">
+      <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Squeak
+      </button>
+      </span>
+    </div>
+    {% csrf_token %}
+  </form>
+
+  {% block errors %}
+    {% for error in errors %}
+      <p class="only-text" style="color: red">
+        {{ error }}
+      </p>
+    {% endfor %}
+  {% endblock %}
+
+  <h2 id="post-list" class="only-text">Squeaks heard from around the world!</h2>
+
+  {% for item in squeaks %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="text-only">
+        {% if item.user.picture %}
+          <img src="{{ item.user.picture }}" width="50px" height="50px">
+        {% endif %}
+        <a href="account/{{ item.user.username }}"> {{item.user.username}}</a> squeaked {{ item.content}} at {{ item.dateTime }}
+        </h4>
+      </div>
+
+      <div class="panel-body">
+        <div name="comment-object{{item.id}}">
+          {% for comment in comments %}
+            {% ifequal item.id comment.postID %}
+              <h5 name="comment{{item.id}}" class="comment">
+              {% if comment.user.picture %}
+                <img src="{{ comment.user.picture }}" width="30px" height="30px">
+              {% endif %}
+              <a href="account/{{ comment.user.username }}"> {{comment.user.username}}</a> commented {{ comment.comment}} at {{ comment.dateTime }}
+              </h5>
+            {% endifequal %}
+          {% endfor %}
+        </div>
+
+        <div id="{{item.id}}" class="commentDiv">
+          <input type="hidden" id="{{item.id}}logged_in_user" value="{{ logged_in_user }}">
+          <input type="hidden" id="{{item.id}}post_id" value="{{item.id}}">
+          <div class="input-group">
+            <input class="form-control" type="text" id="{{item.id}}comment-input" placeholder="comment" maxlength="160" value="{{ comment }}">
+            {% csrf_token %}
+            <span class="input-group-btn">
+              <button name="comment-button" type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Comment
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+     
+  
+{% endblock content %}

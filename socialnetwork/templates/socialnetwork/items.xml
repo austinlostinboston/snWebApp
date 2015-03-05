@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE squeaks [
+<!ELEMENT squeaks (item*)>
+<!ELEMENT item (id,content)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT content (#PCDATA)>
+<!ELEMENT dateTime (#PCDATA)>
+<!ELEMENT user (#PCDATA)>
+<!ELEMENT profile_pic (#PCDATA)>
+]>
+<squeaks>
+  {% for item in squeaks %}
+    <item>
+      <id>{{item.id}}</id>
+      <content>{{item.content}}</content>
+      <user>{{item.user}}</user>
+      <dateTime>{{ item.dateTime|date:"DATETIME_FORMAT" }}</dateTime>
+      <profile_pic>{{ item.user.picture}}</profile_pic>
+    </item>
+  {% endfor %}
+</squeaks>

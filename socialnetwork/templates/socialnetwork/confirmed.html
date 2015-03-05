@@ -1,0 +1,11 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block welcome %}
+    <h1>Confirmed Registration to Squeak!!!</h1>
+{% endblock %}
+
+{% block register %}
+    <h3>Thank you for confirming your email address.
+        Please <a href="{% url 'login' %}">login</a> to access your squeak profile page.
+    </h3>
+{% endblock %}
