@@ -263,7 +263,7 @@ def register(request):
     ## Sends email
     # send_mail(subject="Verify your email address", message= email_body,
     #     from_email="squeakconfirmation@gmail.com", recipient_list=[new_user.email])
-    sg = sendgrid.SendGridClient(os.environ.get('SG-user','SG-password'))
+    sg = sendgrid.SendGridClient(os.environ.get('SG-user'),os.environ.get('SG-password'))
     message = sendgrid.Mail()
     message.add_to(new_user.email)
     message.set_subject('Confirm your email address')
