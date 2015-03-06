@@ -126,13 +126,11 @@ USE_TZ = True
 
 
 ## Enables REAL emails to be sent from email specific in config.ini
-# EMAIL_HOST = os.environ.get('EMAIL_HOST')
-# EMAIL_PORT = os.environ.get('EMAIL_PORT')
-# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
-# SERVER_EMAIL = os.environ.get('EMAIL_HOST_USER')
-# EMAIL_USE_SSL = True
+EMAIL_HOST = os.environ.get('smtp.sendgrid.net')
+EMAIL_PORT = os.environ.get(587)
+EMAIL_HOST_USER = os.environ.get('SG-user')
+EMAIL_HOST_PASSWORD = os.environ.get('SG-password')
+EMAIL_USE_SSL = True
 
 # print 'EMAIL_HOST',EMAIL_HOST+':'+str(EMAIL_PORT)
 # print 'EMAIL_HOST_USER',EMAIL_HOST_USER
