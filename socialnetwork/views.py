@@ -261,18 +261,18 @@ def register(request):
     """ % (request.get_host(), reverse('confirm', args=(new_user.username, token)))
 
     ## Sends email
-    send_mail(subject="Verify your email address", message= email_body,
-        from_email="squeakconfirmation@gmail.com", recipient_list=[new_user.email])
+    # send_mail(subject="Verify your email address", message= email_body,
+    #     from_email="squeakconfirmation@gmail.com", recipient_list=[new_user.email])
     
-    ## Sendgrid attempt
-    # sg = sendgrid.SendGridClient(os.environ.get('SG-user'),os.environ.get('SG-password'))
-    # message = sendgrid.Mail()
-    # message.add_to(new_user.email)
-    # message.set_subject('Confirm your email address')
-    # message.set_text(email_body)
-    # message.set_from('squeak@noreply')
-    # status, msg = sg.send(message)
-    
+    ## Sendgrid attempt - has a pretty significant delay
+    sg = sendgrid.SendGridClient(os.environ.get('SG-user'),os.environ.get('SG-password'))
+    message = sendgrid.Mail()
+    message.add_to(new_user.email)
+    message.set_subject('Confirm your email address')
+    message.set_text(email_body)
+    message.set_from('squeak@noreply')
+    status, msg = sg.send(message)
+
     # Logs in the new user and redirects to his/her todo list
     # new_user = authenticate(username=form.cleaned_data['username'],
     # password=form.cleaned_data['password1'])
