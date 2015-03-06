@@ -122,14 +122,15 @@ USE_TZ = True
 
 
 # Prints email out to terminal
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 ## Enables REAL emails to be sent from email specific in config.ini
-# EMAIL_HOST = config.get('Email', 'Host')
-# EMAIL_PORT = config.get('Email', 'Port')
-# EMAIL_HOST_USER = config.get('Email', 'User')
-# EMAIL_HOST_PASSWORD = config.get('Email', 'Password')
-# EMAIL_USE_SSL = True
-# print 'EMAIL_HOST',EMAIL_HOST+':'+str(EMAIL_PORT)
-# print 'EMAIL_HOST_USER',EMAIL_HOST_USER
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+
+print 'EMAIL_HOST',EMAIL_HOST+':'+str(EMAIL_PORT)
+print 'EMAIL_HOST_USER',EMAIL_HOST_USER
