@@ -258,7 +258,7 @@ def register(request):
 
     ## Sends email
     send_mail(subject="Verify your email address", message= email_body,
-        from_email="eppinger@cmu.edu", recipient_list=[new_user.email])
+        from_email="SqueakConfirmation@gmail.com", recipient_list=[new_user.email])
 
     # Logs in the new user and redirects to his/her todo list
     # new_user = authenticate(username=form.cleaned_data['username'],
