@@ -1,6 +1,7 @@
 import ConfigParser
 import boto
 import io
+import os
 from boto.s3.key import Key
 
 AWS_ACCESS_KEY = os.environ.get('S3-ACCESSKEY')
