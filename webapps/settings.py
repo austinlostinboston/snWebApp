@@ -82,6 +82,8 @@ LOGIN_REDIRECT_URL = "/frontPage"
 #     }
 # }
 
+DATABASES = {}
+
 ## Handles the backend on heroku
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
@@ -94,7 +96,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
-import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Static files (CSS, JavaScript, Images)
